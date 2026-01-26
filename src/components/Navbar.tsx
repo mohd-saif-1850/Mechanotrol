@@ -36,13 +36,13 @@ export default function Navbar() {
   const linkClasses = (path: string) =>
     pathname === path || (path !== "/" && pathname?.startsWith(path))
       ? "text-black font-semibold pb-1 border-b-2 border-[#FF6A00]"
-      : "text-gray-800 hover:text-black font-medium";
+      : "text-gray-800 hover:text-orange-400 font-medium";
 
   return (
     <header className="w-full bg-white shadow-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <span className="text-2xl font-extrabold tracking-tight text-gray-900">
+          <span className="text-2xl hover:text-orange-400 font-extrabold tracking-tight text-gray-900">
             Mechanotrol Tech
           </span>
         </Link>
@@ -63,7 +63,7 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/signup"
-                className="px-4 py-2 rounded-md border border-gray-300 font-medium text-gray-900"
+                className="px-4 py-2 hover:bg-orange-400 rounded-md border border-gray-300 font-medium text-gray-900"
               >
                 Register
               </Link>

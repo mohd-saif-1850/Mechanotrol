@@ -3,7 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import { User } from "@/models/user.model";
-import { ApiError } from "@/utils/apiError";
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -12,7 +11,6 @@ export const authOptions: NextAuthOptions = {
             name: "Credentials",
 
             credentials: {
-                username: { label: "Username", type: "text" },
                 email: { label: "Email", type: "text" },
                 password: { label: "Password", type: "password" },
             },
@@ -20,33 +18,29 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials: any): Promise<any> {
                 await dbConnect();
 
-                const { username, email, password } = credentials;
+                const { email, password } = credentials;
 
-                if (!username) throw new ApiError(422, "Username is required");
-                if (!email) throw new ApiError(422, "Email is required");
-                if (!password) throw new ApiError(422, "Password is required");
+                if (!email) throw new Error("Email is required");
+                if (!password) throw new Error("Password is required");
 
-                const existedUser = await User.findOne({
-                    $or: [{ email }, { username }],
-                });
+                // FIND USER
+                const user = await User.findOne({ email });
 
-                if (existedUser) {
-                    throw new ApiError(409, "User already existed - Please try different credentials");
+                if (!user) {
+                    throw new Error("User does not exist");
                 }
 
-                const hashedPassword = await bcrypt.hash(password, 10);
-
-                const newUser = await User.create({
-                    username,
-                    email,
-                    password: hashedPassword,
-                });
+                // CHECK PASSWORD
+                const isMatch = await bcrypt.compare(password, user.password);
+                if (!isMatch) {
+                    throw new Error("Invalid credentials");
+                }
 
                 return {
-                    _id: newUser._id.toString(),
-                    username: newUser.username,
-                    email: newUser.email,
-                    role: newUser.role
+                    _id: user._id.toString(),
+                    username: user.username,
+                    email: user.email,
+                    role: user.role,
                 };
             }
         })
@@ -75,7 +69,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     pages: {
-        signIn: "/sign-in",
+        signIn: "/login",
     },
 
     session: {

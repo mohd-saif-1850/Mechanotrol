@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
   const [username, setUsername] = useState("");
@@ -13,11 +15,23 @@ export default function SignupPage() {
   const [showCPass, setShowCPass] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  async function onSubmit(e: React.FormEvent) {
+  const router = useRouter()
+
+  const onSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 700));
-    setLoading(false);
+    setLoading(true)
+    try {
+      const result = await axios.post("/api/auth/register",{
+        username,
+        email,
+        password
+      })
+      setLoading(false)
+      router.push("/login")
+    } catch (error) {
+      setLoading(false)
+      console.log("Error in register : ",error)
+    }
   }
 
   return (
@@ -83,28 +97,6 @@ export default function SignupPage() {
               />
               <button type="button" onClick={() => setShowPass(!showPass)} className="p-1">
                 {showPass ? (
-                  <EyeOff className="w-5 h-5 text-gray-500" />
-                ) : (
-                  <Eye className="w-5 h-5 text-gray-500" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <div className="text-sm text-gray-600 mb-1">Confirm Password</div>
-            <div className="flex items-center gap-2 p-3 border border-gray-300 rounded-lg bg-white hover:border-[#FF6A00] focus-within:ring-2 focus-within:ring-[#FF6A00] transition">
-              <Lock className="w-5 h-5 text-[#FF6A00]" />
-              <input
-                type={showCPass ? "text" : "password"}
-                required
-                value={cpassword}
-                placeholder="Confirm password"
-                onChange={(e) => setCPassword(e.target.value)}
-                className="w-full outline-none text-sm"
-              />
-              <button type="button" onClick={() => setShowCPass(!showCPass)} className="p-1">
-                {showCPass ? (
                   <EyeOff className="w-5 h-5 text-gray-500" />
                 ) : (
                   <Eye className="w-5 h-5 text-gray-500" />

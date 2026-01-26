@@ -257,9 +257,9 @@ export default function Home() {
             <div className="text-white text-xl font-bold">Mechanotrol Tech</div>
             <div className="mt-3 text-gray-400 text-sm">AI-powered roadside support.</div>
 
-            <div className="mt-6 space-y-3">
-              <a href="tel:+910000000000" className="inline-flex items-center gap-2 hover:text-white">
-                <PhoneCall className="w-5 h-5" /> +91 98765 43210
+            <div className="mt-6 flex flex-col space-y-3">
+              <a href="tel:+917995484420" className="inline-flex items-center gap-2 hover:text-white">
+                <PhoneCall className="w-5 h-5" /> +91 79954 84420
               </a>
               <a href="mailto:support@mechanotrol.com" className="inline-flex items-center gap-2 hover:text-white">
                 <Mail className="w-5 h-5" /> support@mechanotrol.com
@@ -291,7 +291,7 @@ export default function Home() {
       </footer>
 
       <a
-        href="https://wa.me/917000000000?text=Hi%20Mechanotrol%20Team"
+        href="https://wa.me/7995484420?text=Hi%20Mechanotrol%20Team" target="_blank"
         className="fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(0,0,0,0.35)] transition transform hover:scale-110"
         style={{ background: "#25D366" }}
       >

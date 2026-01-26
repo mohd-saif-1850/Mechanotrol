@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -10,11 +12,24 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  async function onSubmit(e: React.FormEvent) {
+  const router = useRouter()
+
+  const onSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 700));
-    setLoading(false);
+    setLoading(true)
+    try {
+      const result = await signIn("credentials",{
+        redirect: false,
+        email,
+        password
+      })
+      console.log("LOgin successfully !")
+      setLoading(false)
+      router.push("/")
+    } catch (error) {
+      setLoading(false)
+      console.log("Error in login : ",error)
+    }
   }
 
   return (
