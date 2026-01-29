@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, AlertCircle } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -11,26 +11,30 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const router = useRouter()
+  const router = useRouter();
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true)
-    try {
-      const result = await signIn("credentials",{
-        redirect: false,
-        email,
-        password
-      })
-      console.log("LOgin successfully !")
-      setLoading(false)
-      router.push("/")
-    } catch (error) {
-      setLoading(false)
-      console.log("Error in login : ",error)
+    setErrorMsg("");
+    setLoading(true);
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    setLoading(false);
+
+    if (result?.error) {
+      setErrorMsg(result.error);
+      return;
     }
-  }
+
+    router.push("/");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-gray-100 px-4">
@@ -95,10 +99,20 @@ export default function LoginPage() {
               <input type="checkbox" className="w-4 h-4" /> Remember me
             </label>
 
-            <Link href="/forgot" className="text-[#FF6A00] font-medium hover:underline">
+            <Link
+              href="/forgot"
+              className="text-[#FF6A00] font-medium hover:underline"
+            >
               Forgot password?
             </Link>
           </div>
+
+          {errorMsg && (
+            <div className="flex items-center gap-2 text-red-600 text-sm bg-red-100/70 p-3 rounded-lg border border-red-300">
+              <AlertCircle className="w-4 h-4" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
 
           <button
             type="submit"
@@ -114,7 +128,10 @@ export default function LoginPage() {
 
           <div className="text-center pt-2 text-sm text-gray-600">
             Don’t have an account?{" "}
-            <Link href="/signup" className="text-[#FF6A00] font-medium hover:underline">
+            <Link
+              href="/signup"
+              className="text-[#FF6A00] font-medium hover:underline"
+            >
               Create an account
             </Link>
           </div>

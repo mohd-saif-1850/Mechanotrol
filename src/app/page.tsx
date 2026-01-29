@@ -78,7 +78,7 @@ export default function Home() {
               </div>
 
               <div className="mt-6">
-                <select className="w-full p-4 rounded-md border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition focus:outline-none">
+                <select className="w-full cursor-pointer p-4 rounded-md border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition focus:outline-none">
                   <option>Car</option>
                   <option>Bike</option>
                   <option>EV</option>
@@ -90,7 +90,7 @@ export default function Home() {
                   className="flex-1 p-4 rounded-md border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition focus:outline-none"
                   placeholder="Enter your location"
                 />
-                <button className="px-4 py-3 rounded-md bg-gray-100 border border-gray-300 hover:bg-gray-200 transition">Auto</button>
+                <button className="px-4 py-3 rounded-md bg-gray-100 border border-gray-300 hover:bg-gray-200 cursor-not-allowed transition" disabled>Auto</button>
               </div>
 
               <div className="mt-8 flex gap-3">
@@ -240,7 +240,7 @@ export default function Home() {
             />
             <button
               type="submit"
-              className="px-6 py-4 rounded-md text-white font-semibold transition hover:shadow-[0_8px_24px_rgba(255,106,0,0.6)] hover:-translate-y-1"
+              className="px-6 cursor-pointer py-4 rounded-md text-white font-semibold transition hover:shadow-[0_8px_24px_rgba(255,106,0,0.6)] hover:-translate-y-1"
               style={{
                 background: "linear-gradient(90deg, #FF3B30, #FF6A00, #FF8C00)",
               }}

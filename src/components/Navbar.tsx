@@ -73,6 +73,7 @@ export default function Navbar() {
           {session?.user?._id && (
             <>
               <Link href="/" className={linkClasses("/")}>Home</Link>
+              <Link href="/services" className={linkClasses("/services")}>Services</Link>
               <Link href="/about" className={linkClasses("/about")}>About Us</Link>
               <Link href="/contact" className={linkClasses("/contact")}>Contact</Link>
               <Link
@@ -84,10 +85,29 @@ export default function Navbar() {
               </Link>
               <button
                 onClick={() => signOut()}
-                className="px-4 py-2 rounded-md font-medium text-white bg-red-600"
+                className="
+                  relative px-6 py-2.5 rounded-xl font-semibold text-white 
+                  bg-gradient-to-br from-red-500 via-red-600 to-red-700
+                  shadow-[0_0_15px_rgba(255,0,0,0.5)]
+                  hover:shadow-[0_0_25px_rgba(255,60,60,0.8)]
+                  hover:scale-[1.08] cursor-pointer
+                  transition-all duration-300 ease-out
+                  overflow-hidden
+                "
               >
-                Logout
+                <span
+                  className="
+                    absolute inset-0 bg-gradient-to-r 
+                    from-transparent via-white/20 to-transparent 
+                    opacity-0 hover:opacity-100 
+                    translate-x-[-100%] hover:translate-x-[100%] 
+                    transition-all duration-700
+                  "
+                ></span>
+
+                <span className="relative z-10 tracking-wide">Logout</span>
               </button>
+
             </>
           )}
         </nav>
@@ -96,7 +116,7 @@ export default function Navbar() {
           aria-controls="mobile-menu"
           aria-expanded={open}
           onClick={() => setOpen((s) => !s)}
-          className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6A00]"
+          className="md:hidden inline-flex cursor-pointer items-center justify-center p-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6A00]"
         >
           <span className="sr-only">Toggle menu</span>
           {!open ? (
@@ -166,6 +186,7 @@ export default function Navbar() {
               {session?.user?._id && (
                 <>
                   <Link href="/" ref={firstLinkRef} onClick={() => setOpen(false)} className={linkClasses("/") + " text-lg"}>Home</Link>
+                  <Link href="/services" onClick={() => setOpen(false)} className={linkClasses("/services") + " text-lg"}>Services</Link>
                   <Link href="/about" onClick={() => setOpen(false)} className={linkClasses("/about") + " text-lg"}>About Us</Link>
                   <Link href="/contact" onClick={() => setOpen(false)} className={linkClasses("/contact") + " text-lg"}>Contact</Link>
 
@@ -180,16 +201,35 @@ export default function Navbar() {
 
                   <button
                     onClick={() => { setOpen(false); signOut(); }}
-                    className="px-4 py-3 rounded-md font-medium text-white bg-red-600"
+                    className="
+                      relative px-5 py-3 rounded-xl font-semibold text-white text-center
+                      bg-gradient-to-br from-red-500 via-red-600 to-red-700
+                      shadow-[0_0_18px_rgba(255,0,0,0.45)]
+                      hover:shadow-[0_0_28px_rgba(255,60,60,0.75)]
+                      active:scale-95
+                      transition-all duration-300 ease-out
+                      overflow-hidden cursor-pointer
+                    "
                   >
-                    Logout
+                    <span
+                      className="
+                        absolute inset-0 bg-gradient-to-r 
+                        from-transparent via-white/25 to-transparent
+                        opacity-0 hover:opacity-100
+                        translate-x-[-120%] hover:translate-x-[120%]
+                        transition-all duration-700
+                      "
+                    ></span>
+
+                    <span className="relative z-10 tracking-wide">Logout</span>
                   </button>
+
                 </>
               )}
             </div>
 
             <div className="mt-8 text-sm text-gray-500">
-              <div>Need help? <Link href="/contact" onClick={() => setOpen(false)} className="text-gray-800 underline">Contact Us</Link></div>
+              <div>Need help? <Link href="/contact" onClick={() => setOpen(false)} className="text-gray-800 cursor-pointer underline">Contact Us</Link></div>
             </div>
           </div>
         </div>

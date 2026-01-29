@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { User, Mail, Lock, Eye, EyeOff, AlertCircle } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -14,25 +14,40 @@ export default function SignupPage() {
   const [showPass, setShowPass] = useState(false);
   const [showCPass, setShowCPass] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const router = useRouter()
+  const router = useRouter();
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true)
+    setErrorMsg("");
+
+    if (password !== cpassword) {
+      setErrorMsg("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      const result = await axios.post("/api/auth/register",{
+      const res = await axios.post("/api/auth/register", {
         username,
         email,
-        password
-      })
-      setLoading(false)
-      router.push("/login")
-    } catch (error) {
-      setLoading(false)
-      console.log("Error in register : ",error)
+        password,
+      });
+
+      setLoading(false);
+      router.push("/login");
+
+    } catch (error: any) {
+      setLoading(false);
+      if (error?.response?.data?.message) {
+        setErrorMsg(error.response.data.message);
+      } else {
+        setErrorMsg("Something went wrong. Please try again.");
+      }
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-gray-100 px-4">
@@ -105,6 +120,35 @@ export default function SignupPage() {
             </div>
           </div>
 
+          <div>
+            <div className="text-sm text-gray-600 mb-1">Confirm Password</div>
+            <div className="flex items-center gap-2 p-3 border border-gray-300 rounded-lg bg-white hover:border-[#FF6A00] focus-within:ring-2 focus-within:ring-[#FF6A00] transition">
+              <Lock className="w-5 h-5 text-[#FF6A00]" />
+              <input
+                type={showCPass ? "text" : "password"}
+                required
+                value={cpassword}
+                placeholder="Confirm password"
+                onChange={(e) => setCPassword(e.target.value)}
+                className="w-full outline-none text-sm"
+              />
+              <button type="button" onClick={() => setShowCPass(!showCPass)} className="p-1">
+                {showCPass ? (
+                  <EyeOff className="w-5 h-5 text-gray-500" />
+                ) : (
+                  <Eye className="w-5 h-5 text-gray-500" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {errorMsg && (
+            <div className="flex items-center gap-2 text-red-600 text-sm bg-red-100/70 p-3 rounded-lg border border-red-300">
+              <AlertCircle className="w-4 h-4" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
           <button
             type="submit"
             disabled={loading}
@@ -123,6 +167,7 @@ export default function SignupPage() {
               Login
             </Link>
           </div>
+
         </form>
       </div>
 
