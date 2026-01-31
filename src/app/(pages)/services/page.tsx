@@ -36,11 +36,12 @@ export default function ServicesPage() {
       icon: <AlertTriangle className="w-12 h-12 text-[#FF6A00]" />,
     },
     {
-      title: "Performance Optimization",
+      title: "Car Washing",
       desc:
-        "AI-based performance insights that help increase fuel efficiency, engine life, and operational smoothness. Monitor, improve, and maintain peak performance.",
+        "Professional exterior and interior car washing with advanced sensors ensuring spotless cleaning, streak-free shine, and protective finishing. Enjoy a hygienic, fresh, and showroom-ready look every time.",
       icon: <ShieldCheck className="w-12 h-12 text-[#FF6A00]" />,
     },
+
     {
       title: "Service History Tracking",
       desc:
