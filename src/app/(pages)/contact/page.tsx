@@ -43,8 +43,9 @@ export default function ContactPage() {
               <div className="p-5 rounded-2xl bg-gray-100 border border-gray-300">
                 <h3 className="text-xl font-semibold">Address</h3>
                 <p className="text-gray-700">
-                  Mechanotrol Tech HQ<br />
-                  IIT Madras, India
+                  Nirman,<br />
+                  2nd Floor, Sudha and Shankar Innovation Hub,<br/>
+                  IIT Madras, Chennai 600 036, India
                 </p>
               </div>
 
