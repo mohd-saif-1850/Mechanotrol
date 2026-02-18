@@ -44,7 +44,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image
-            src="/mechano.jpeg"
+            src="/mechano.png"
             alt="Mechanotrol Logo"
             width={160}
             height={50}
@@ -148,7 +148,7 @@ export default function Navbar() {
             <div className="flex items-center justify-between mb-6">
               <Link href="/" onClick={() => setOpen(false)} className="flex items-center">
                 <Image
-                  src="/mechano.jpeg"
+                  src="/mechano.png"
                   alt="Mechanotrol Logo"
                   width={140}
                   height={45}
