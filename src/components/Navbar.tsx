@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -42,9 +43,14 @@ export default function Navbar() {
     <header className="w-full bg-white shadow-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <span className="text-2xl hover:text-orange-400 font-extrabold tracking-tight text-gray-900">
-            Mechanotrol Tech
-          </span>
+          <Image
+            src="/mechano.jpeg"
+            alt="Mechanotrol Logo"
+            width={160}
+            height={50}
+            className="object-contain"
+            priority
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
@@ -141,9 +147,13 @@ export default function Navbar() {
           <div className="relative max-w-md w-full bg-white h-full shadow-xl p-6 overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <Link href="/" onClick={() => setOpen(false)} className="flex items-center">
-                <span className="text-2xl font-extrabold tracking-tight text-gray-900">
-                  Mechanotrol Tech
-                </span>
+                <Image
+                  src="/mechano.jpeg"
+                  alt="Mechanotrol Logo"
+                  width={140}
+                  height={45}
+                  className="object-contain"
+                />
               </Link>
               <button
                 onClick={() => setOpen(false)}
